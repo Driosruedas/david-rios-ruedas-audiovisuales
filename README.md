@@ -72,7 +72,7 @@ El workflow `.github/workflows/deploy-pages.yml` compila y publica automáticame
 6. Espera a que finalice la acción `Deploy to GitHub Pages`.
 7. GitHub mostrará la URL pública en **Settings > Pages**. El workflow usa HTTPS automáticamente.
 
-La URL exacta no puede conocerse todavía porque depende de tu usuario y del nombre final del repositorio. Será `https://TU_USUARIO.github.io/NOMBRE_DEL_REPOSITORIO/`.
+La URL pública prevista para este repositorio es `https://driosruedas.github.io/david-rios-ruedas-audiovisuales/`. GitHub Pages la servirá mediante HTTPS.
 
 ## Versionado Git
 
@@ -82,7 +82,7 @@ Desde la carpeta del proyecto:
 git init -b main
 git add .
 git commit -m "Preparar portfolio para GitHub Pages"
-git remote add origin https://github.com/TU_USUARIO/NOMBRE_DEL_REPOSITORIO.git
+git remote add origin https://github.com/Driosruedas/david-rios-ruedas-audiovisuales.git
 git push -u origin main
 ```
 
