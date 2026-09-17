@@ -79,6 +79,44 @@ const profileCarouselMarkup = `
 
 const app = document.querySelector('#app')
 
+const preventImageDownload = () => {
+  const guardEvents = ['contextmenu', 'dragstart', 'dragover', 'drop', 'selectstart', 'copy']
+
+  document.querySelectorAll('img').forEach((img) => {
+    img.draggable = false
+    img.setAttribute('decoding', 'async')
+    img.setAttribute('loading', 'lazy')
+
+    guardEvents.forEach((eventName) => {
+      img.addEventListener(eventName, (event) => {
+        event.preventDefault()
+      }, { passive: false })
+    })
+
+    img.addEventListener('mousedown', (event) => {
+      if (event.button === 2) {
+        event.preventDefault()
+      }
+    })
+  })
+
+  document.addEventListener('contextmenu', (event) => {
+    const target = event.target.closest('img')
+    if (target) {
+      event.preventDefault()
+    }
+  }, { passive: false })
+
+  document.addEventListener('keydown', (event) => {
+    const shortcutKeys = ['s', 'c', 'p']
+    const isModifier = event.ctrlKey || event.metaKey || event.altKey
+
+    if (isModifier && shortcutKeys.includes(event.key.toLowerCase())) {
+      event.preventDefault()
+    }
+  }, { passive: false })
+}
+
 app.innerHTML = `
   <div class="site-shell">
     <div class="reading-progress" aria-hidden="true"><span></span></div>
@@ -206,6 +244,8 @@ const backTop = document.querySelector('#back-top')
 const mobileNav = document.querySelector('#mobile-nav')
 const photoModal = document.querySelector('#photo-modal')
 const photoModalImage = photoModal.querySelector('img')
+
+preventImageDownload()
 
 const openPhotoModal = (src, alt) => {
   photoModalImage.src = src

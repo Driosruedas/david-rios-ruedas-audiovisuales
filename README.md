@@ -94,6 +94,17 @@ git commit -m "Actualizar portfolio"
 git push
 ```
 
+## Protección de imágenes y contenido visual
+
+Se ha reforzado la protección del contenido visual para frenar la descarga casual por parte de un usuario normal:
+
+- bloqueo de clic derecho en imágenes y modal de galería
+- desactivación de arrastre y selección de imágenes
+- bloqueo de atajos de teclado comunes (`Ctrl/Cmd + S`, `Ctrl/Cmd + C`, `Ctrl/Cmd + P`)
+- prevención de acceso directo a la descarga a través del navegador
+
+Esto limita la extracción sencilla desde la propia web, aunque ninguna protección frontend puede impedir totalmente la captura o reutilización avanzada de contenido si el usuario dispone de herramientas externas.
+
 ## Interacciones incluidas
 
 - Navegación anclada responsive.
