@@ -1,13 +1,81 @@
 const linkedInUrl = 'https://www.linkedin.com/in/davidr%C3%ADosruedas/'
 
 const sections = [
-    { id: 'proyectos', label: 'Proyectos' },
-    { id: 'sobre-mi', label: 'Perfil' },
-    { id: 'experiencia', label: 'Experiencia' },
-    { id: 'ia', label: 'IA aplicada' },
-    { id: 'recursos', label: 'Recursos' },
-    { id: 'contacto', label: 'Contacto' },
+  { id: 'proyectos', label: 'Proyectos' },
+  { id: 'sobre-mi', label: 'Perfil' },
+  { id: 'experiencia', label: 'Experiencia' },
+  { id: 'ia', label: 'IA aplicada' },
+  { id: 'recursos', label: 'Recursos' },
+  { id: 'contacto', label: 'Contacto' },
 ]
+
+const profilePhotos = [
+  '_MG_0763.jpg',
+  '_MG_0797.jpg',
+  '_MG_1030.jpg',
+  '_MG_1152.jpg',
+  '_MG_2083.jpg',
+  '_MG_2095.jpg',
+  '_MG_2429.jpg',
+  '_MG_2449.jpg',
+  '_MG_2619.jpg',
+  '_MG_2743.JPG',
+  '_MG_7252.jpg',
+  '_MG_8922.jpg',
+  '_MG_8977.jpg',
+  '_MG_9384.jpg',
+  '_MG_9560.jpg',
+  '_MG_9713.jpg',
+  '_MG_9785.jpg',
+  '_MG_9805.jpg',
+  '_MG_9822.jpg',
+  '_MG_9899.jpg',
+  '_MG_9966.jpg',
+  'bustamante.png',
+  'grulla real.png',
+]
+
+const assetPath = (fileName) => `./assets/fotos/${encodeURIComponent(fileName)}`
+
+const shufflePhotos = (photos) => {
+  const shuffled = [...photos]
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1))
+      ;[shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]]
+  }
+
+  return shuffled
+}
+
+const randomizedProfilePhotos = shufflePhotos(profilePhotos)
+
+const profileCarouselMarkup = `
+  <div class="photo-carousel" data-carousel>
+    <div class="carousel-viewport">
+      <div class="carousel-track">
+        ${randomizedProfilePhotos.map((photo, index) => `
+          <button
+            type="button"
+            class="carousel-slide${index === 0 ? ' is-active' : ''}"
+            data-index="${index}"
+            data-image="${assetPath(photo)}"
+            data-alt="David Ríos Ruedas fotografía ${index + 1}"
+            aria-label="Ampliar fotografía ${index + 1}"
+          >
+            <img src="${assetPath(photo)}" alt="David Ríos Ruedas fotografía ${index + 1}" loading="lazy" />
+          </button>
+        `).join('')}
+      </div>
+      <button class="carousel-nav is-prev" type="button" aria-label="Fotografía anterior">‹</button>
+      <button class="carousel-nav is-next" type="button" aria-label="Fotografía siguiente">›</button>
+    </div>
+    <div class="carousel-footer">
+      <span class="carousel-counter"><strong data-slide-current>1</strong> / ${randomizedProfilePhotos.length}</span>
+      <button class="carousel-expand" type="button">Ampliar</button>
+    </div>
+  </div>
+`
 
 const app = document.querySelector('#app')
 
@@ -37,7 +105,7 @@ app.innerHTML = `
         <div class="hero-copy reveal">
           <p class="eyebrow"><span class="status-dot"></span> Especialista en IA generativa · Editor de vídeo</p>
           <h1>David Ríos<br /><span>Ruedas</span></h1>
-          <p class="hero-lead">Técnico audiovisual y creador de contenido con más de siete años de experiencia, especializado actualmente en IA generativa y edición de vídeo.</p>
+          <p class="hero-lead">Técnico audiovisual y creador de contenido con más de siete años de experiencia, actualmente especializado en IA generativa y edición de vídeo.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#sobre-mi">Explorar perfil <span aria-hidden="true">↓</span></a>
             <a class="button button-quiet" href="${linkedInUrl}" target="_blank" rel="noreferrer">Ver LinkedIn <span aria-hidden="true">↗</span></a>
@@ -60,7 +128,7 @@ app.innerHTML = `
           <span class="section-count">Contenido audiovisual</span>
         </div>
         <div class="project-placeholder">
-          <div class="placeholder-art"><img src="./assets/jose-mota-rey.png" alt="José Mota caracterizado como el rey" /><span>DRR</span></div>
+          <div class="placeholder-art"><img src="./assets/david-rios-ruedas.png" alt="David Ríos Ruedas" /><span>DRR</span></div>
           <div class="placeholder-copy"><span class="project-label">Selección profesional</span><h3>Vídeo, fotografía y narrativa visual</h3><p>Una selección de trabajos compartidos en LinkedIn, desde producción audiovisual con IA hasta making-of, fotografía y contenido digital.</p></div>
         </div>
         <div class="embed-grid" aria-label="Publicaciones audiovisuales de LinkedIn">
@@ -82,7 +150,7 @@ app.innerHTML = `
           <div class="intro-copy">
             <p>Soy David Ríos, técnico audiovisual y creador de contenido con más de siete años de experiencia. Hoy combino producción audiovisual tradicional con inteligencia artificial para crear imágenes, vídeo, voces y clones con procesos más ágiles, escalables y de alta calidad.</p>
           </div>
-          <div class="intro-portrait"><img src="./assets/jose-mota-queen.png" alt="José Mota caracterizado como reina" /></div>
+          <div class="intro-portrait">${profileCarouselMarkup}</div>
         </div>
       </section>
 
@@ -122,6 +190,13 @@ app.innerHTML = `
 
     <footer class="site-footer"><span>© ${new Date().getFullYear()} David Ríos Ruedas Audiovisuales</span><span><a href="${linkedInUrl}" target="_blank" rel="noreferrer">LinkedIn ↗</a></span></footer>
     <button class="back-top" id="back-top" type="button" aria-label="Volver al inicio">↑</button>
+    <div class="photo-modal" id="photo-modal" aria-hidden="true">
+      <div class="photo-modal__backdrop" data-close-modal></div>
+      <div class="photo-modal__panel" role="dialog" aria-modal="true" aria-label="Ampliar fotografía">
+        <button class="photo-modal__close" type="button" aria-label="Cerrar imagen">✕</button>
+        <img src="" alt="" />
+      </div>
+    </div>
   </div>
 `
 
@@ -129,34 +204,117 @@ const root = document.documentElement
 const progress = document.querySelector('.reading-progress span')
 const backTop = document.querySelector('#back-top')
 const mobileNav = document.querySelector('#mobile-nav')
+const photoModal = document.querySelector('#photo-modal')
+const photoModalImage = photoModal.querySelector('img')
+
+const openPhotoModal = (src, alt) => {
+  photoModalImage.src = src
+  photoModalImage.alt = alt
+  photoModal.classList.add('is-open')
+  photoModal.setAttribute('aria-hidden', 'false')
+}
+
+const closePhotoModal = () => {
+  photoModal.classList.remove('is-open')
+  photoModal.setAttribute('aria-hidden', 'true')
+}
+
+const carousel = document.querySelector('[data-carousel]')
+
+if (carousel) {
+  const track = carousel.querySelector('.carousel-track')
+  const slides = [...carousel.querySelectorAll('.carousel-slide')]
+  const currentLabel = carousel.querySelector('[data-slide-current]')
+  const previousButton = carousel.querySelector('.is-prev')
+  const nextButton = carousel.querySelector('.is-next')
+  const expandButton = carousel.querySelector('.carousel-expand')
+  let currentIndex = Math.floor(Math.random() * slides.length)
+  let autoAdvanceTimer = null
+
+  const restartAutoAdvance = () => {
+    clearInterval(autoAdvanceTimer)
+    autoAdvanceTimer = setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length
+      updateCarousel()
+    }, 4500)
+  }
+
+  const updateCarousel = () => {
+    track.style.transform = `translateX(-${currentIndex * 100}%)`
+    slides.forEach((slide, index) => slide.classList.toggle('is-active', index === currentIndex))
+    currentLabel.textContent = String(currentIndex + 1)
+  }
+
+  previousButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length
+    updateCarousel()
+    restartAutoAdvance()
+  })
+
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % slides.length
+    updateCarousel()
+    restartAutoAdvance()
+  })
+
+  slides.forEach((slide) => {
+    slide.addEventListener('click', () => {
+      const { image, alt } = slide.dataset
+      openPhotoModal(image, alt)
+      clearInterval(autoAdvanceTimer)
+    })
+  })
+
+  expandButton.addEventListener('click', () => {
+    const activeSlide = slides[currentIndex]
+    const { image, alt } = activeSlide.dataset
+    openPhotoModal(image, alt)
+    clearInterval(autoAdvanceTimer)
+  })
+
+  updateCarousel()
+  restartAutoAdvance()
+}
+
+photoModal.addEventListener('click', (event) => {
+  if (event.target.matches('[data-close-modal]') || event.target.matches('.photo-modal__close')) {
+    closePhotoModal()
+  }
+})
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && photoModal.classList.contains('is-open')) {
+    closePhotoModal()
+  }
+})
 
 window.addEventListener('scroll', () => {
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight
-    progress.style.width = `${scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0}%`
-    backTop.classList.toggle('is-visible', window.scrollY > 500)
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight
+  progress.style.width = `${scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0}%`
+  backTop.classList.toggle('is-visible', window.scrollY > 500)
 }, { passive: true })
 
 document.querySelector('#theme-toggle').addEventListener('click', () => {
-    const dark = root.classList.toggle('dark-theme')
-    document.querySelector('#theme-toggle').textContent = dark ? '☾' : '☼'
-    document.querySelector('#theme-toggle').setAttribute('aria-label', dark ? 'Activar tema claro' : 'Activar tema oscuro')
+  const dark = root.classList.toggle('dark-theme')
+  document.querySelector('#theme-toggle').textContent = dark ? '☾' : '☼'
+  document.querySelector('#theme-toggle').setAttribute('aria-label', dark ? 'Activar tema claro' : 'Activar tema oscuro')
 })
 
 document.querySelector('#menu-toggle').addEventListener('click', (event) => {
-    const open = mobileNav.classList.toggle('is-open')
-    event.currentTarget.setAttribute('aria-expanded', String(open))
+  const open = mobileNav.classList.toggle('is-open')
+  event.currentTarget.setAttribute('aria-expanded', String(open))
 })
 
 document.querySelectorAll('.mobile-nav a').forEach((link) => link.addEventListener('click', () => {
-    mobileNav.classList.remove('is-open')
-    document.querySelector('#menu-toggle').setAttribute('aria-expanded', 'false')
+  mobileNav.classList.remove('is-open')
+  document.querySelector('#menu-toggle').setAttribute('aria-expanded', 'false')
 }))
 
 backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
 
 const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('is-visible')
-    })
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add('is-visible')
+  })
 }, { threshold: 0.14 })
 document.querySelectorAll('.reveal').forEach((element) => observer.observe(element))
