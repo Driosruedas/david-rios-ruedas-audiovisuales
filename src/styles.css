@@ -1289,6 +1289,15 @@ h2 {
         font-size: clamp(3rem, 14vw, 5rem);
     }
 
+    /* «competencias» no cabe a 14vw: se reduce solo este titular */
+    .skills-layout h2 {
+        font-size: clamp(2rem, 11vw, 5rem);
+    }
+
+    .skills-layout > * {
+        min-width: 0;
+    }
+
     .section-heading-row {
         display: block;
         margin-bottom: 38px;
