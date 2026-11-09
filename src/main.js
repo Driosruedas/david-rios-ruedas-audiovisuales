@@ -10,29 +10,29 @@ const sections = [
 ]
 
 const profilePhotos = [
-  '_MG_0763.jpg',
-  '_MG_0797.jpg',
-  '_MG_1030.jpg',
-  '_MG_1152.jpg',
-  '_MG_2083.jpg',
-  '_MG_2095.jpg',
-  '_MG_2429.jpg',
-  '_MG_2449.jpg',
-  '_MG_2619.jpg',
-  '_MG_2743.JPG',
-  '_MG_7252.jpg',
-  '_MG_8922.jpg',
-  '_MG_8977.jpg',
-  '_MG_9384.jpg',
-  '_MG_9560.jpg',
-  '_MG_9713.jpg',
-  '_MG_9785.jpg',
-  '_MG_9805.jpg',
-  '_MG_9822.jpg',
-  '_MG_9899.jpg',
-  '_MG_9966.jpg',
-  'bustamante.png',
-  'grulla real.png',
+  { file: '_MG_0763.jpg', alt: 'Personaje con chaleco de piel en un rodaje en exterior' },
+  { file: '_MG_0797.jpg', alt: 'Actor con traje y gafas de sol en un rodaje en exterior' },
+  { file: '_MG_1030.jpg', alt: 'Personaje recostado en una cama durante un rodaje de comedia' },
+  { file: '_MG_1152.jpg', alt: 'Tres personajes caracterizados con pelucas sobre croma verde' },
+  { file: '_MG_2083.jpg', alt: 'Personaje de pelo largo caracterizado en un plató' },
+  { file: '_MG_2095.jpg', alt: 'Escena de una partida de cartas en un rodaje de ficción' },
+  { file: '_MG_2429.jpg', alt: 'Actor con gorra en un rodaje nocturno' },
+  { file: '_MG_2449.jpg', alt: 'Retrato de actor en un rodaje nocturno con luces de fondo' },
+  { file: '_MG_2619.jpg', alt: 'Presentador con esmoquin junto a un árbol de Navidad en una gala de TVE' },
+  { file: '_MG_2743.JPG', alt: 'Pareja bailando frente al Palacio Real de Madrid' },
+  { file: '_MG_7252.jpg', alt: 'Actor con chaleco en un plató de televisión' },
+  { file: '_MG_8922.jpg', alt: 'Personaje asomado tras unas cortinas en un rodaje' },
+  { file: '_MG_8977.jpg', alt: 'Dos presentadores haciéndose un selfi en un plató de televisión' },
+  { file: '_MG_9384.jpg', alt: 'Actriz caracterizada de agente de policía en un rodaje' },
+  { file: '_MG_9560.jpg', alt: 'Escena de ficción en interior con dos personajes' },
+  { file: '_MG_9713.jpg', alt: 'Escena de hospital en un rodaje de ficción' },
+  { file: '_MG_9785.jpg', alt: 'Personaje vestido de sacerdote en un quirófano de rodaje' },
+  { file: '_MG_9805.jpg', alt: 'Dos actores posando en el set de rodaje' },
+  { file: '_MG_9822.jpg', alt: 'Actor con traje gris y brazos cruzados en un set con cámara' },
+  { file: '_MG_9899.jpg', alt: 'Escena de prisión en un rodaje de ficción' },
+  { file: '_MG_9966.jpg', alt: 'Dos personajes en una escena de exterior' },
+  { file: 'bustamante.jpg', alt: 'Cantante actuando en directo en un plató de televisión' },
+  { file: 'grulla-real.jpg', alt: 'Dos grullas coronadas, fotografía de naturaleza' },
 ]
 
 const assetPath = (fileName) => `./assets/fotos/${encodeURIComponent(fileName)}`
@@ -59,11 +59,11 @@ const profileCarouselMarkup = `
             type="button"
             class="carousel-slide${index === 0 ? ' is-active' : ''}"
             data-index="${index}"
-            data-image="${assetPath(photo)}"
-            data-alt="David Ríos Ruedas fotografía ${index + 1}"
-            aria-label="Ampliar fotografía ${index + 1}"
+            data-image="${assetPath(photo.file)}"
+            data-alt="${photo.alt}. Fotografía de David Ríos Ruedas"
+            aria-label="Ampliar fotografía: ${photo.alt}"
           >
-            <img src="${assetPath(photo)}" alt="David Ríos Ruedas fotografía ${index + 1}" loading="lazy" />
+            <img src="${assetPath(photo.file)}" alt="${photo.alt}. Fotografía de David Ríos Ruedas" loading="lazy" width="1600" height="1067" />
           </button>
         `).join('')}
       </div>
@@ -85,7 +85,7 @@ const preventImageDownload = () => {
   document.querySelectorAll('img').forEach((img) => {
     img.draggable = false
     img.setAttribute('decoding', 'async')
-    img.setAttribute('loading', 'lazy')
+    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy')
 
     guardEvents.forEach((eventName) => {
       img.addEventListener(eventName, (event) => {
@@ -150,7 +150,7 @@ app.innerHTML = `
           </div>
         </div>
         <div class="hero-aside reveal reveal-delay">
-          <img class="hero-photo" src="./assets/david-rios-ruedas-perfil.jpg" alt="David Ríos Ruedas" />
+          <img class="hero-photo" src="./assets/david-rios-ruedas-perfil.jpg" alt="David Ríos Ruedas, editor de vídeo y especialista en IA generativa" loading="eager" fetchpriority="high" width="400" height="400" />
         </div>
         <div class="hero-footer">
           <span>01 / 05</span>
@@ -166,7 +166,7 @@ app.innerHTML = `
           <span class="section-count">Contenido audiovisual</span>
         </div>
         <div class="project-placeholder">
-          <div class="placeholder-art"><img src="./assets/david-rios-ruedas.png" alt="David Ríos Ruedas" /><span>DRR</span></div>
+          <div class="placeholder-art"><img src="./assets/david-rios-ruedas.jpg" alt="David Ríos Ruedas en el desierto con una mochila" /><span>DRR</span></div>
           <div class="placeholder-copy"><span class="project-label">Selección profesional</span><h3>Vídeo, fotografía y narrativa visual</h3><p>Una selección de trabajos compartidos en LinkedIn, desde producción audiovisual con IA hasta making-of, fotografía y contenido digital.</p></div>
         </div>
         <div class="embed-grid" aria-label="Publicaciones audiovisuales de LinkedIn">
