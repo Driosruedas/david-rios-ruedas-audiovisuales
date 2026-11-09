@@ -236,6 +236,13 @@ img::selection {
     color: var(--muted);
 }
 
+/* La línea superior va dentro del H1 (SEO) pero se ve como antes */
+h1 .eyebrow {
+    color: var(--muted);
+    font-weight: 400;
+    line-height: normal;
+}
+
 .status-dot {
     width: 7px;
     height: 7px;

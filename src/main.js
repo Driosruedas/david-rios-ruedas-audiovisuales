@@ -111,6 +111,10 @@ const root = document.documentElement
 const progress = document.querySelector('.reading-progress span')
 const backTop = document.querySelector('#back-top')
 const mobileNav = document.querySelector('#mobile-nav')
+
+// El menú está una sola vez en el HTML (enlaces sin duplicar para los buscadores);
+// el de móvil se copia del de escritorio.
+document.querySelectorAll('.desktop-nav a').forEach((link) => mobileNav.appendChild(link.cloneNode(true)))
 const photoModal = document.querySelector('#photo-modal')
 const photoModalImage = photoModal.querySelector('img')
 
