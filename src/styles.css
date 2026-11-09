@@ -243,6 +243,32 @@ h1 .eyebrow {
     line-height: normal;
 }
 
+/* Enlaces dentro de los textos hacia otras secciones */
+.intro-copy p a,
+.placeholder-copy p a,
+.section-heading-row p a,
+.contact-copy a {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color .2s ease;
+}
+
+.intro-copy p a:hover,
+.placeholder-copy p a:hover,
+.section-heading-row p a:hover {
+    color: var(--ink);
+}
+
+.section-dark .section-heading-row p a:hover {
+    color: #f5f1ea;
+}
+
+.contact-copy a {
+    text-decoration-color: var(--ink);
+}
+
 .status-dot {
     width: 7px;
     height: 7px;
@@ -1061,6 +1087,11 @@ h2 {
     margin-bottom: 0;
     line-height: .82;
     font-size: clamp(3.3rem, 7vw, 7rem);
+}
+
+/* Sobre el fondo mostaza, el segundo renglón no puede ir en mostaza */
+.contact-section h2 span {
+    color: #fffdf9;
 }
 
 .contact-copy {
