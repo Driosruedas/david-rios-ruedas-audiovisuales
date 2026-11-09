@@ -68,9 +68,24 @@ const protectContent = () => {
 }
 
 // Las miniaturas cargan el vídeo solo al pulsarlas: la página carga más rápido.
+// data-video: vídeo propio, se reproduce con un solo clic. data-embed: reproductor de YouTube.
 const setupVideoThumbs = () => {
   document.querySelectorAll('.video-thumb').forEach((thumb) => {
     thumb.addEventListener('click', () => {
+      if (thumb.dataset.video) {
+        const video = document.createElement('video')
+        video.src = thumb.dataset.video
+        video.poster = thumb.querySelector('img').src
+        video.title = thumb.dataset.title
+        video.controls = true
+        video.playsInline = true
+        video.preload = 'auto'
+        video.setAttribute('controlslist', 'nodownload')
+        thumb.replaceWith(video)
+        video.play().catch(() => {})
+        return
+      }
+
       const iframe = document.createElement('iframe')
       iframe.src = thumb.dataset.embed
       iframe.title = thumb.dataset.title
